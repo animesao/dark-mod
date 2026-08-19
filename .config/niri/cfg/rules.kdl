@@ -1,3 +1,8 @@
+    // Все окна открываются на всю ширину
+    window-rule {
+        default-column-width { proportion 1.0; }
+    }
+
     window-rule {
         geometry-corner-radius 20 // Set every window radius to 20
         clip-to-geometry true
