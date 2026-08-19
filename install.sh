@@ -45,6 +45,7 @@ if [ "$PKG" = "pacman" ]; then
 elif [ "$PKG" = "apt" ]; then
     $INSTALL \
         niri \
+        alacritty \
         grim \
         slurp \
         wl-clipboard \
@@ -56,6 +57,7 @@ elif [ "$PKG" = "apt" ]; then
 elif [ "$PKG" = "dnf" ]; then
     $INSTALL \
         niri \
+        alacritty \
         grim \
         slurp \
         wl-clipboard \
