@@ -3,11 +3,11 @@ set -e
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-echo "╔══════════════════════════════════════╗"
-echo "║    Установка dotfiles (Niri + Noctalia)    ║"
-echo "╚══════════════════════════════════════╝"
+echo "========================================"
+echo "  Установка dotfiles (Niri + Noctalia)"
+echo "========================================"
 
-# ─── Проверка пакетного менеджера ───
+# --- Проверка пакетного менеджера ---
 if command -v pacman &>/dev/null; then
     PKG="pacman"
     INSTALL="sudo pacman -S --noconfirm"
@@ -18,15 +18,15 @@ elif command -v dnf &>/dev/null; then
     PKG="dnf"
     INSTALL="sudo dnf install -y"
 else
-    echo "❌ Неизвестный пакетный менеджер. Установи пакеты вручную."
+    echo "Unknown package manager. Install packages manually."
     exit 1
 fi
 
-echo "📦 Пакетный менеджер: $PKG"
+echo "Package manager: $PKG"
 
-# ─── Установка зависимостей ───
+# --- Установка зависимостей ---
 echo ""
-echo "📦 Установка пакетов..."
+echo "Installing packages..."
 
 if [ "$PKG" = "pacman" ]; then
     $INSTALL \
@@ -67,53 +67,65 @@ elif [ "$PKG" = "dnf" ]; then
         sddm
 fi
 
-# ─── Установка конфигов ───
+# --- Установка конфигов ---
 echo ""
-echo "📁 Установка конфигов..."
+echo "Installing configs..."
 
 # Niri
 mkdir -p ~/.config/niri/cfg
 cp -f "$DOTFILES_DIR/.config/niri/config.kdl" ~/.config/niri/config.kdl
 cp -f "$DOTFILES_DIR/.config/niri/cfg/"*.kdl ~/.config/niri/cfg/
-echo "  ✅ Niri"
+echo "  [OK] Niri"
 
 # Alacritty
 mkdir -p ~/.config/alacritty
 cp -f "$DOTFILES_DIR/.config/alacritty/alacritty.toml" ~/.config/alacritty/alacritty.toml
-echo "  ✅ Alacritty"
+echo "  [OK] Alacritty"
 
 # Noctalia
 mkdir -p ~/.config/noctalia
 cp -f "$DOTFILES_DIR/.config/noctalia/config.toml" ~/.config/noctalia/config.toml
-echo "  ✅ Noctalia"
+echo "  [OK] Noctalia"
 
-# Курсор
+# SDDM Theme (Silent)
+sudo cp -rf "$DOTFILES_DIR/sddm/themes/silent" /usr/share/sddm/themes/
+sudo cp -f "$DOTFILES_DIR/sddm/sddm.conf" /etc/sddm.conf
+echo "  [OK] SDDM (Silent theme)"
+
+# Cursor
 mkdir -p ~/.local/share/icons
 cp -rf "$DOTFILES_DIR/cursors" ~/.local/share/icons/future-dark-cursors
-echo "  ✅ Курсор (future-dark-cursors)"
+echo "  [OK] Cursor (future-dark-cursors)"
 
-# ─── Fish shell ───
+# --- Fish shell ---
 echo ""
-echo "🐚 Настройка Fish shell..."
+echo "Setting up Fish shell..."
 if ! grep -q "fish" /etc/shells 2>/dev/null; then
     echo "$(which fish)" | sudo tee -a /etc/shells > /dev/null
 fi
-echo "  ✅ Fish добавлен в /etc/shells"
-echo "  ⚠️  Чтобы сделать Fish основным: chsh -s $(which fish)"
+echo "  [OK] Fish added to /etc/shells"
+echo "  Run: chsh -s $(which fish) to make Fish default"
 
-# ─── Включение сервисов ───
+# --- Enable services ---
 echo ""
-echo "🔧 Включение сервисов..."
+echo "Enabling services..."
 if command -v systemctl &>/dev/null; then
     sudo systemctl enable --now NetworkManager 2>/dev/null || true
     sudo systemctl enable sddm 2>/dev/null || true
-    echo "  ✅ NetworkManager, SDDM"
+    echo "  [OK] NetworkManager, SDDM"
 fi
 
 echo ""
-echo "╔══════════════════════════════════════╗"
-echo "║           Готово! 🎉                    ║"
-echo "╠══════════════════════════════════════╣"
-echo "║ Перезайди в сессию для применения.    ║"
-echo "║ Mod+Shift+Q → Выйти                   ║"
-echo "╚══════════════════════════════════════╝"
+echo "========================================"
+echo "           Done!"
+echo "========================================"
+echo ""
+echo "Installed:"
+echo "  - Niri (Wayland WM) + Noctalia (shell)"
+echo "  - Alacritty (terminal)"
+echo "  - SDDM (login screen - Silent theme)"
+echo "  - Fish shell"
+echo "  - Grim + Slurp (screenshots)"
+echo "  - Cursor: future-dark-cursors"
+echo ""
+echo "Re-login to apply: Mod+Shift+Q -> Logout"
