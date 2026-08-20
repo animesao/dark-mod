@@ -97,6 +97,15 @@ mkdir -p ~/.local/share/icons
 cp -rf "$DOTFILES_DIR/cursors" ~/.local/share/icons/future-dark-cursors
 echo "  [OK] Cursor (future-dark-cursors)"
 
+# X11/XWayland cursor (for games)
+mkdir -p ~/.icons/default
+cp -f "$DOTFILES_DIR/.icons/default/index.theme" ~/.icons/default/index.theme
+echo "  [OK] X11 cursor fallback"
+
+# SDDM cursor
+sudo sed -i 's/GreeterEnvironment=.*/GreeterEnvironment=QML2_IMPORT_PATH=\/usr\/share\/sddm\/themes\/silent\/components\,QT_IM_MODULE=qtvirtualkeyboard,CURSOR_THEME=future-dark-cursors,CURSOR_SIZE=24/' /etc/sddm.conf 2>/dev/null || true
+echo "  [OK] SDDM cursor theme"
+
 # --- Fish shell ---
 echo ""
 echo "Setting up Fish shell..."
