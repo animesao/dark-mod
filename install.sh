@@ -121,6 +121,23 @@ fi
 echo "  [OK] Fish added to /etc/shells"
 echo "  Run: chsh -s $(which fish) to make Fish default"
 
+# --- Cleanup script ---
+echo ""
+echo "Installing cleanup script..."
+mkdir -p ~/.local/bin
+cp -f "$DOTFILES_DIR/.local/bin/daily-cleanup.sh" ~/.local/bin/daily-cleanup.sh
+chmod +x ~/.local/bin/daily-cleanup.sh
+echo "  [OK] Cleanup script"
+
+# Systemd timer for daily cleanup
+mkdir -p ~/.config/systemd/user
+cp -f "$DOTFILES_DIR/.config/systemd/user/daily-cleanup.timer" ~/.config/systemd/user/
+cp -f "$DOTFILES_DIR/.config/systemd/user/daily-cleanup.service" ~/.config/systemd/user/
+systemctl --user daemon-reload 2>/dev/null || true
+systemctl --user enable daily-cleanup.timer 2>/dev/null || true
+systemctl --user start daily-cleanup.timer 2>/dev/null || true
+echo "  [OK] Daily cleanup timer (4:00 AM)"
+
 # --- Enable services ---
 echo ""
 echo "Enabling services..."

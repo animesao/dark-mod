@@ -1,0 +1,6 @@
+[Unit]
+Description=Daily system cleanup
+
+[Service]
+Type=oneshot
+ExecStart=/home/animesao/.local/bin/daily-cleanup.sh
