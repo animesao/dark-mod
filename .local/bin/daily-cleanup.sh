@@ -19,8 +19,8 @@ rm -rf ~/.cache/thumbnails/* 2>/dev/null
 # 4. Trash
 rm -rf ~/.local/share/Trash/* 2>/dev/null
 
-# 5. Old logs (keep 3 days)
-sudo journalctl --vacuum-time=3d 2>/dev/null >> "$LOG" 2>&1
+# 5. Old logs (keep 3 days, skip if no sudo)
+journalctl --vacuum-time=3d 2>/dev/null >> "$LOG" 2>&1
 
 # 6. Font cache
 rm -rf ~/.cache/fontconfig/* 2>/dev/null
