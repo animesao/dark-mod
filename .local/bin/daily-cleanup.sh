@@ -7,8 +7,8 @@ mkdir -p "$(dirname "$LOG")"
 
 echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting cleanup..." >> "$LOG"
 
-# 1. Package cache (keep last 2 versions)
-yay -Scc --noconfirm 2>/dev/null >> "$LOG" 2>&1
+# 1. Package cache (non-interactive)
+yes | yay -Scc 2>/dev/null >> "$LOG" 2>&1
 
 # 2. npm cache
 npm cache clean --force 2>/dev/null >> "$LOG" 2>&1
