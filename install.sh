@@ -40,7 +40,8 @@ if [ "$PKG" = "pacman" ]; then
         fish \
         polkit \
         networkmanager \
-        sddm
+        sddm \
+        tela-circle-icon-theme-grey
 
 elif [ "$PKG" = "apt" ]; then
     $INSTALL \
@@ -106,6 +107,11 @@ echo "  [OK] X11 cursor fallback"
 sudo sed -i 's/GreeterEnvironment=.*/GreeterEnvironment=QML2_IMPORT_PATH=\/usr\/share\/sddm\/themes\/silent\/components\,QT_IM_MODULE=qtvirtualkeyboard,CURSOR_THEME=future-dark-cursors,CURSOR_SIZE=24/' /etc/sddm.conf 2>/dev/null || true
 echo "  [OK] SDDM cursor theme"
 
+# Icon theme
+gsettings set org.gnome.desktop.interface icon-theme 'Tela-circle-grey-dark' 2>/dev/null || true
+echo 'set -gx GTK_ICON_THEME Tela-circle-grey-dark' >> ~/.config/fish/config.fish
+echo "  [OK] Icon theme (Tela-circle-grey-dark)"
+
 # --- Fish shell ---
 echo ""
 echo "Setting up Fish shell..."
@@ -135,6 +141,7 @@ echo "  - Alacritty (terminal)"
 echo "  - SDDM (login screen - Silent theme)"
 echo "  - Fish shell"
 echo "  - Grim + Slurp (screenshots)"
-echo "  - Cursor: future-dark-cursors"
+echo "  - Cursor: future-dark-cursors
+  - Icons: Tela-circle-grey-dark"
 echo ""
 echo "Re-login to apply: Mod+Shift+Q -> Logout"
