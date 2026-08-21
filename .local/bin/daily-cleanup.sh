@@ -7,20 +7,20 @@ mkdir -p "$(dirname "$LOG")"
 
 echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting cleanup..." >> "$LOG"
 
-# 1. Package cache (non-interactive)
+# 1. Clean pacman download locks first
+rm -rf /var/cache/pacman/pkg/download-* 2>/dev/null
+
+# 2. Package cache (non-interactive)
 yes | yay -Scc 2>/dev/null >> "$LOG" 2>&1
 
-# 2. npm cache
+# 3. npm cache
 npm cache clean --force 2>/dev/null >> "$LOG" 2>&1
 
-# 3. Thumbnails
+# 4. Thumbnails
 rm -rf ~/.cache/thumbnails/* 2>/dev/null
 
-# 4. Trash
+# 5. Trash
 rm -rf ~/.local/share/Trash/* 2>/dev/null
-
-# 5. Old logs (keep 3 days, skip if no sudo)
-journalctl --vacuum-time=3d 2>/dev/null >> "$LOG" 2>&1
 
 # 6. Font cache
 rm -rf ~/.cache/fontconfig/* 2>/dev/null
