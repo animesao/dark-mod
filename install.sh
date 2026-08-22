@@ -112,6 +112,16 @@ gsettings set org.gnome.desktop.interface icon-theme 'Tela-circle-grey-dark' 2>/
 echo 'set -gx GTK_ICON_THEME Tela-circle-grey-dark' >> ~/.config/fish/config.fish
 echo "  [OK] Icon theme (Tela-circle-grey-dark)"
 
+# Fonts (JetBrains Mono)
+mkdir -p ~/.local/share/fonts
+cp -f "$DOTFILES_DIR/.local/share/fonts/"*.ttf ~/.local/share/fonts/
+fc-cache -f 2>/dev/null || true
+echo "  [OK] Fonts (JetBrains Mono)"
+
+# Git config
+cp -f "$DOTFILES_DIR/.gitconfig" ~/.gitconfig 2>/dev/null || true
+echo "  [OK] Git config"
+
 # --- Fish shell ---
 echo ""
 echo "Setting up Fish shell..."
@@ -159,6 +169,8 @@ echo "  - SDDM (login screen - Silent theme)"
 echo "  - Fish shell"
 echo "  - Grim + Slurp (screenshots)"
 echo "  - Cursor: future-dark-cursors
-  - Icons: Tela-circle-grey-dark"
+  - Icons: Tela-circle-grey-dark
+  - Fonts: JetBrains Mono
+  - Git config (name, email)"
 echo ""
 echo "Re-login to apply: Mod+Shift+Q -> Logout"
