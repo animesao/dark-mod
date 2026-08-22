@@ -118,10 +118,6 @@ cp -f "$DOTFILES_DIR/.local/share/fonts/"*.ttf ~/.local/share/fonts/
 fc-cache -f 2>/dev/null || true
 echo "  [OK] Fonts (JetBrains Mono)"
 
-# Git config
-cp -f "$DOTFILES_DIR/.gitconfig" ~/.gitconfig 2>/dev/null || true
-echo "  [OK] Git config"
-
 # --- Fish shell ---
 echo ""
 echo "Setting up Fish shell..."
@@ -170,7 +166,6 @@ echo "  - Fish shell"
 echo "  - Grim + Slurp (screenshots)"
 echo "  - Cursor: future-dark-cursors
   - Icons: Tela-circle-grey-dark
-  - Fonts: JetBrains Mono
-  - Git config (name, email)"
+  - Fonts: JetBrains Mono"
 echo ""
 echo "Re-login to apply: Mod+Shift+Q -> Logout"
