@@ -118,6 +118,11 @@ cp -f "$DOTFILES_DIR/.local/share/fonts/"*.ttf ~/.local/share/fonts/
 fc-cache -f 2>/dev/null || true
 echo "  [OK] Fonts (JetBrains Mono)"
 
+# Wallpaper
+mkdir -p ~/Pictures
+cp -f "$DOTFILES_DIR/wallpapers/default.png" ~/Pictures/wallpaper.png
+echo "  [OK] Wallpaper"
+
 # --- Fish shell ---
 echo ""
 echo "Setting up Fish shell..."
@@ -166,6 +171,7 @@ echo "  - Fish shell"
 echo "  - Grim + Slurp (screenshots)"
 echo "  - Cursor: future-dark-cursors
   - Icons: Tela-circle-grey-dark
-  - Fonts: JetBrains Mono"
+  - Fonts: JetBrains Mono
+  - Wallpaper"
 echo ""
 echo "Re-login to apply: Mod+Shift+Q -> Logout"
